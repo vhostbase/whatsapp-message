@@ -21,6 +21,7 @@ public class MessageController {
 			if("received".equalsIgnoreCase(SmsStatus)) {
 				MessageSender.sendMsg(result.get("From"), result.get("Body"));
 			}
+			
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
