@@ -17,7 +17,10 @@ public class MessageController {
 	public void adminMessage(@RequestBody String msg) {
 		try {
 			Map<String, String> result = splitQuery(msg);
-			SendMessage.sendMsg(result.get("From"), result.get("Body"));
+			String SmsStatus = result.get("SmsStatus");
+			if("received".equalsIgnoreCase(SmsStatus)) {
+				MessageSender.sendMsg(result.get("From"), result.get("Body"));
+			}
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
