@@ -9,8 +9,10 @@ public class HttpTest {
 
 	public static void main(String[] args) throws Exception {
 		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost httpPost = new HttpPost("http://localhost:8080/paramMessage?msg=Testing");
-//		httpPost.setEntity(new StringEntity("Testing"));
+		//HttpPost httpPost = new HttpPost("http://localhost:8080/adminMessage");
+		HttpPost httpPost = new HttpPost("http://whatschat-whatschat.apps.us-east-2.online-starter.openshift.com/adminMessage");
+		httpPost.setEntity(new StringEntity("Testing"));
+		httpPost.setHeader("Content-Type", "text/plain");
 		httpClient.execute(httpPost);
 	}
 

@@ -23,4 +23,14 @@ public class SendMessage {
 
         System.out.println(message.getSid());    	
     }
+    public static void sendMsg(String mobileNum, String txtMessage) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new com.twilio.type.PhoneNumber(mobileNum),
+                new com.twilio.type.PhoneNumber("whatsapp:+14155238886"),
+                txtMessage)
+            .create();
+
+        System.out.println(message.getSid());    	
+    }
 }
