@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 	@RequestMapping(method = RequestMethod.POST, path = "/adminMessage")
 	public void adminMessage(@RequestBody String msg) {
+		System.out.println("adminMessage called..");
 		try {
 			Map<String, String> result = splitQuery(msg);
 			String SmsStatus = result.get("SmsStatus");
+			System.out.println("SmsStatus :: "+SmsStatus);
 			if("received".equalsIgnoreCase(SmsStatus)) {
 				MessageSender.sendMsg(result.get("From"), result.get("Body"));
 			}
