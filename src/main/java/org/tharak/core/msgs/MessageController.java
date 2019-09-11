@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MessageController {
-	private final static String TEMPLATE = "{0}:{1}";
+	private final static String TEMPLATE = "{0} :\n{1}";
 	@RequestMapping(method = RequestMethod.POST, path = "/adminMessage")
 	public void adminMessage(@RequestBody String msg) {
 		System.out.println("adminMessage called..");
@@ -23,8 +23,10 @@ public class MessageController {
 			String SmsStatus = result.get("SmsStatus");
 			System.out.println("SmsStatus :: "+SmsStatus);
 			if("received".equalsIgnoreCase(SmsStatus)) {
-				MessageFormat.format(TEMPLATE, new Object[] {result.get("From"), result.get("Body")});
-				MessageSender.sendMsg("whatsapp:+919573725223", result.get("Body"));
+				String fromAddr = result.get("From");
+				fromAddr = fromAddr.replace("whatsapp:", "");
+				String message = MessageFormat.format(TEMPLATE, new Object[] {fromAddr, result.get("Body")});
+				MessageSender.sendMsg("whatsapp:+919573725223", message);
 			}
 			
 		}catch(Exception ex) {
