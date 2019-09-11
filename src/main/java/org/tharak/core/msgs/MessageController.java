@@ -2,6 +2,7 @@ package org.tharak.core.msgs;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MessageController {
+	private final static String TEMPLATE = "{0}:{1}";
 	@RequestMapping(method = RequestMethod.POST, path = "/adminMessage")
 	public void adminMessage(@RequestBody String msg) {
 		System.out.println("adminMessage called..");
@@ -21,7 +23,8 @@ public class MessageController {
 			String SmsStatus = result.get("SmsStatus");
 			System.out.println("SmsStatus :: "+SmsStatus);
 			if("received".equalsIgnoreCase(SmsStatus)) {
-				MessageSender.sendMsg(result.get("From"), result.get("Body"));
+				MessageFormat.format(TEMPLATE, new Object[] {result.get("From"), result.get("Body")});
+				MessageSender.sendMsg("whatsapp:+919573725223", result.get("Body"));
 			}
 			
 		}catch(Exception ex) {
