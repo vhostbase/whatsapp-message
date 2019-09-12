@@ -22,7 +22,7 @@ public class MessageSender {
         System.out.println(message.getSid());    	
     }
     public static void sendImageMsg(String mobileNum, String txtMessage, List<URI> media) {
-    	System.out.println("sendMsg called..");
+    	System.out.println("sendImageMsg called..");
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         MessageCreator msgCreater = Message.creator(
                 new com.twilio.type.PhoneNumber(mobileNum),

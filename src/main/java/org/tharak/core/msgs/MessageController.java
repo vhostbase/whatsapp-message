@@ -46,21 +46,28 @@ public class MessageController {
 	@RequestMapping(method = RequestMethod.POST, path = "/inComingMessage")
 	public void inComingMessage(@RequestBody String msg) {
 		System.out.println("inComingMessage called..");
-		/*
-		 * try { Map<String, String> result = splitQuery(msg); String SmsStatus =
-		 * result.get("SmsStatus"); System.out.println("SmsStatus :: "+SmsStatus);
-		 * if("received".equalsIgnoreCase(SmsStatus)) { String fromAddr =
-		 * result.get("From"); fromAddr = fromAddr.replace("whatsapp:", ""); String
-		 * message = MessageFormat.format(TEMPLATE, new Object[] {fromAddr,
-		 * result.get("Body")}); String MediaContentType0 =
-		 * result.get("MediaContentType0"); if(MediaContentType0 != null &&
-		 * MediaContentType0.trim().length() > 0) { ArrayList<URI> mediaUris = new
-		 * ArrayList<URI>(); mediaUris.add(URI.create(result.get("MediaUrl0")));
-		 * MessageSender.sendImageMsg("whatsapp:+919573725223", message, mediaUris);
-		 * }else { MessageSender.sendMsg("whatsapp:+919573725223", message); } }
-		 * 
-		 * }catch(Exception ex) { ex.printStackTrace(); }
-		 */
+		try {
+			Map<String, String> result = splitQuery(msg);
+			String SmsStatus = result.get("SmsStatus");
+			System.out.println("SmsStatus :: " + SmsStatus);
+			if ("received".equalsIgnoreCase(SmsStatus)) {
+				String fromAddr = result.get("From");
+				fromAddr = fromAddr.replace("whatsapp:", "");
+				String message = MessageFormat.format(TEMPLATE, new Object[] { fromAddr, result.get("Body") });
+				String MediaContentType0 = result.get("MediaContentType0");
+				if (MediaContentType0 != null && MediaContentType0.trim().length() > 0) {
+					ArrayList<URI> mediaUris = new ArrayList<URI>();
+					mediaUris.add(URI.create(result.get("MediaUrl0")));
+					MessageSender.sendImageMsg("whatsapp:+919573725223", message, mediaUris);
+				} else {
+					MessageSender.sendMsg("whatsapp:+919573725223", message);
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		System.out.println(msg);
 	}
 	@RequestMapping(method = RequestMethod.POST, path = "/statusOfMessage")
